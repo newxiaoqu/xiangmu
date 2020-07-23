@@ -6,12 +6,37 @@
         <el-button style="float: right; padding: 3px 0" type="text">注册</el-button>
       </div>
       <!-- 表单 -->
+      <el-form :model="form">
+          <el-form-item>
+              <el-input v-model="form.name" placeholder="请输入手机号"></el-input>
+          </el-form-item>
+          <el-form-item>
+              <el-input v-model="form.code" placeholder="请输入验证码" style="width:297px;margin-right:15px "></el-input>
+              <el-button>请输入验证码</el-button>
+          </el-form-item>
+          <el-form-item>
+              <el-checkbox v-model="form.checked">已经阅读和同意用户协议和隐私条款</el-checkbox>
+          </el-form-item>
+          <el-form-item>
+              <el-button type="primary" style="width:100%">登 录</el-button>
+          </el-form-item>
+      </el-form>
     </el-card>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      form: {
+        name: '',
+        code: '',
+        checked: true
+      }
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>

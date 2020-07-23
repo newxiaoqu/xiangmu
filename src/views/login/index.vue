@@ -6,7 +6,7 @@
         <el-button style="float: right; padding: 3px 0" type="text">注册</el-button>
       </div>
       <!-- 表单 -->
-      <el-form :model="form" :rules="RulesLogin">
+      <el-form :model="form" status-icon :rules="RulesLogin">
         <el-form-item prop="mobile">
           <el-input v-model="form.mobile" placeholder="请输入手机号"></el-input>
         </el-form-item>
@@ -28,6 +28,13 @@
 <script>
 export default {
   data () {
+    // 校验手机号的函数
+    const mobileyz = (rule, value, callback) => {
+      if (!/^1[3-9]\d{9}$/.test(value)) {
+        return callback(new Error('手机号格式有误！'))
+      }
+      callback()
+    }
     return {
       form: {
         mobile: '',
@@ -37,7 +44,8 @@ export default {
       RulesLogin: {
         mobile: [
           { required: true, message: '请输入手机号', trigger: 'blur' },
-          { min: 7, max: 11, message: '请输入长度在 7 到 11 个之间的数字', trigger: 'blur' }
+          //   { min: 7, max: 11, message: '请输入长度在 7 到 11 个之间的数字', trigger: 'blur' }
+          { validator: mobileyz, trigger: 'blur' }
         ],
         code: [
           { required: true, message: '请输入验证码', trigger: 'blur' },

@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <h2>APP 根组件</h2>
+  <div id="app">
   </div>
 </template>
 

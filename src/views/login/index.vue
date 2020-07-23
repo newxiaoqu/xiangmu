@@ -6,7 +6,7 @@
         <el-button style="float: right; padding: 3px 0" type="text">注册</el-button>
       </div>
       <!-- 表单 -->
-      <el-form :model="form" status-icon :rules="RulesLogin">
+      <el-form :model="form" status-icon :rules="RulesLogin" ref="form">
         <el-form-item prop="mobile">
           <el-input v-model="form.mobile" placeholder="请输入手机号"></el-input>
         </el-form-item>
@@ -18,7 +18,7 @@
           <el-checkbox v-model="form.checked">已经阅读和同意用户协议和隐私条款</el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" style="width:100%">登 录</el-button>
+          <el-button type="primary" style="width:100%" @click="submitForm">登 录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -52,6 +52,15 @@ export default {
           { len: 6, message: '请输入长度在 6 位之间的数字', trigger: 'blur' }
         ]
       }
+    }
+  },
+  methods: {
+    submitForm () {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+        //   alert('校验成功')
+        }
+      })
     }
   }
 }

@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 // 1.1配置路由
 import Login from '@/views/login' // 登录
 import Home from '@/views/home' // 首页
+import Welcome from '@/views/welcome' // 欢迎页面、二级路由组件
 
 // 2.注册
 Vue.use(VueRouter)
@@ -15,7 +16,14 @@ const router = new VueRouter({
     // 登录
     { path: '/login', component: Login },
     // 首页
-    { path: '/', component: Home }
+    {
+      path: '/',
+      component: Home,
+      children: [
+        // 二级路由：欢迎页面
+        { path: '/', component: Welcome }
+      ]
+    }
   ]
 })
 

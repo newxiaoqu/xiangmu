@@ -15,7 +15,7 @@ const router = new VueRouter({
     // 登录
     { path: '/login', component: Login },
     // 首页
-    { path: '/home', component: Home }
+    { path: '/', component: Home }
   ]
 })
 

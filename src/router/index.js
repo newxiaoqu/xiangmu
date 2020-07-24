@@ -6,6 +6,7 @@ import VueRouter from 'vue-router'
 import Login from '@/views/login' // 登录
 import Home from '@/views/home' // 首页
 import Welcome from '@/views/welcome' // 欢迎页面、二级路由组件
+import NotFound from '@/views/404' // 404页面 一级路由
 
 // 2.注册
 Vue.use(VueRouter)
@@ -23,7 +24,9 @@ const router = new VueRouter({
         // 二级路由：欢迎页面
         { path: '/', component: Welcome }
       ]
-    }
+    },
+    // 404页面
+    { path: '*', component: NotFound }
   ]
 })
 

@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 
 // 1.1配置路由
 import Login from '@/views/login' // 登录
-import Home from '@/views/home'
+import Home from '@/views/home' // 首页
 
 // 2.注册
 Vue.use(VueRouter)

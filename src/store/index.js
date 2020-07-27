@@ -8,7 +8,7 @@ export default {
   },
   // 2.获取用户信息
   getUser () {
-    return window.sessionStorage.getItem(KEY)
+    return JSON.parse(window.sessionStorage.getItem(KEY) || '{}')
   },
   // 3.删除用户信息
   deleteUser () {

@@ -1,6 +1,7 @@
 // 1.引入vue和vue-router
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '@/store'
 
 // 1.1配置路由
 import Login from '@/views/login' // 登录
@@ -47,6 +48,12 @@ const router = new VueRouter({
     // 注意：404页面应该写在所有路由规则的最后
     { path: '*', component: NotFound }
   ]
+})
+
+// 设置前置导航守卫
+router.beforeEach((to, from, next) => {
+  if (to.path !== '/login' && !store.getUser().token) return next('/login')
+  next()
 })
 
 // 4.导出VueRouter实例

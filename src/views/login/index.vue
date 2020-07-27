@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import store from '@/store'
 export default {
   data () {
     // 校验手机号的函数
@@ -63,6 +64,8 @@ export default {
           this.$http.post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.form).then(res => {
             // 登录成功
             // 直接跳转到首页
+            // 存储用户信息
+            store.setUser(res.data.data)
             this.$router.push('/')
           }).catch(e => {
             // 登录失败

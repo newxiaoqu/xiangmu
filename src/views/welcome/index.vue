@@ -5,7 +5,11 @@
 </template>
 
 <script>
-export default {}
+export default {
+  created () {
+    this.$http.get('user/profile').then(res => console.log(res.data)).catch(err => console.log(err))
+  }
+}
 </script>
 
 <style lang="less" scoped>

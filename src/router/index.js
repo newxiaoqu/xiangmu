@@ -1,6 +1,7 @@
 // 1.引入vue和vue-router
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+// 操作用户信息的工具函数
 import store from '@/store'
 
 // 1.1配置路由

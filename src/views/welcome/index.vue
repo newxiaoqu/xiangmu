@@ -1,13 +1,17 @@
 <template>
   <div class="container-welcome">
     <img src="../../assets/welcome.jpg" class="Welimg" alt="">
+    <button @click="fn()">获取数据</button>
   </div>
 </template>
 
 <script>
 export default {
-  created () {
-    this.$http.get('user/profile').then(res => console.log(res.data)).catch(err => console.log(err))
+  methods: {
+    fn () {
+      this.$http.get('user/profile').then(res => console.log(res.data)).catch(err => console.log(err))
+    }
+
   }
 }
 </script>

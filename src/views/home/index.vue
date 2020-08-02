@@ -66,15 +66,15 @@
         <span @click="toggerAside" class="el-icon-s-fold icon"></span>
         <span class="text">后台管理系统</span>
         <!-- 右侧 下拉菜单-->
-        <el-dropdown class="dropdown">
+        <el-dropdown class="dropdown" @command="instruct">
           <span class="el-dropdown-link">
             <img :src="photo" class="img" alt />
             <span class="wenben">{{name}}</span>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item icon="el-icon-setting" @click.native="setting()">个人设置</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-unlock" @click.native="lonout()">退出登录</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-setting" command="setting">个人设置</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-unlock" command="lonout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -118,6 +118,10 @@ export default {
     lonout () {
       store.deleteUser()
       this.$router.push('login')
+    },
+    // 处理指令的函数
+    instruct (command) {
+      this[command]()
     }
   }
 }

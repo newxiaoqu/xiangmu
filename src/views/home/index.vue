@@ -5,13 +5,13 @@
       <!-- login区域 -->
       <div class="logo" v-if="isOpen">
         <span>
-          <img src="../../assets/aixinxin.jpg" class="img" alt />
+          <img :src="photo" class="img" alt />
         </span>
-        <span class="wenben">爱心心</span>
+        <span class="wenben">{{name}}</span>
       </div>
       <div class="logo1" v-else>
           <span>
-              <img src="../../assets/aixinxin.jpg" class="img" alt="">
+              <img :src="photo" class="img" alt="">
           </span>
       </div>
       <!-- 侧边栏导航菜单组件 -->
@@ -68,8 +68,8 @@
         <!-- 右侧 下拉菜单-->
         <el-dropdown class="dropdown">
           <span class="el-dropdown-link">
-            <img src="../../assets/aixinxin.jpg" class="img" alt />
-            <span class="wenben">爱心心</span>
+            <img :src="photo" class="img" alt />
+            <span class="wenben">{{name}}</span>
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
@@ -87,12 +87,22 @@
 </template>
 
 <script>
+import store from '@/store'
 export default {
   data () {
     return {
       // 表示左菜单是展开还是收起
-      isOpen: true
+      isOpen: true,
+      // 用户名称
+      name: '',
+      // 用户头像
+      photo: ''
     }
+  },
+  created () {
+    const user = store.getUser()
+    this.name = user.name
+    this.photo = user.photo
   },
   methods: {
     toggerAside () {

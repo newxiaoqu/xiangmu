@@ -73,8 +73,8 @@
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item icon="el-icon-setting">个人设置</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-unlock">退出登录</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-setting" @click.native="setting()">个人设置</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-unlock" @click.native="lonout()">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </el-header>
@@ -109,6 +109,15 @@ export default {
       // 切换左菜单
       // 宽度 logo导航菜单组件
       this.isOpen = !this.isOpen
+    },
+    // 切换个人设置
+    setting () {
+      this.$router.push('/setting')
+    },
+    // 退出登录
+    lonout () {
+      store.deleteUser()
+      this.$router.push('login')
     }
   }
 }

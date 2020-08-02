@@ -57,21 +57,28 @@ export default {
   },
   methods: {
     submitForm () {
-      this.$refs.form.validate((valid) => {
+      this.$refs.form.validate(async (valid) => {
         if (valid) {
         //   alert('校验成功')
         // 进行登录
-          this.$http.post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.form).then(res => {
-            // 登录成功
-            // 直接跳转到首页
-            // 存储用户信息
+          // this.$http.post('http://ttapi.research.itcast.cn/mp/v1_0/authorizations', this.form).then(res => {
+          //   // 登录成功
+          //   // 直接跳转到首页
+          //   // 存储用户信息
+          //   store.setUser(res.data.data)
+          //   this.$router.push('/')
+          // }).catch(e => {
+          //   // 登录失败
+          //   // 提示手机号或者验证码错误
+          //   this.$message.error('手机号或者验证码错误')
+          // })
+          try {
+            const res = await this.$http.post('/authorizations', this.form)
             store.setUser(res.data.data)
             this.$router.push('/')
-          }).catch(e => {
-            // 登录失败
-            // 提示手机号或者验证码错误
-            this.$message.error('手机号或者验证码错误')
-          })
+          } catch (error) {
+            this.$message.error('手机号或验证码错误')
+          }
         }
       })
     }

@@ -1,5 +1,5 @@
 <template>
-  <div>内容管理组件</div>
+  <div>内容管理页面</div>
 </template>
 
 <script>

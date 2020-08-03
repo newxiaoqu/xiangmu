@@ -9,7 +9,7 @@ import Login from '@/views/login' // 登录
 import Home from '@/views/home' // 首页
 import Welcome from '@/views/welcome' // 欢迎页面、二级路由组件
 import NotFound from '@/views/404' // 404页面 一级路由
-import Article from '@/views/article' // 内容管理页面，二级路由组件
+import Article from '@/views/article'// 内容管理页面，二级路由组件
 import Image from '@/views/image' // 素材管理页面，二级路由组件
 import Publish from '@/views/publish' // 发布文章管理页面 二级路由
 import Comment from '@/views/comment' // 评论管理页面 二级路由

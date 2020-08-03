@@ -20,7 +20,7 @@
       <!-- text-color文本颜色 -->
       <!-- active-text-color被激活菜单的文本颜色 -->
       <el-menu
-        default-active="1"
+        :default-active="$route.path"
         background-color="#4792e6"
         text-color="#fff"
         active-text-color="#ffd04b"

@@ -1,5 +1,5 @@
 <template>
-  <el-container class="container">
+  <el-container class="container-home">
       <!-- 控制左侧菜单的展开与收起 -->
     <el-aside :width="isOpen? '200px':'64px'">
       <!-- login区域 -->
@@ -131,7 +131,7 @@ export default {
 .el-main {
   padding: 0;
 }
-.container {
+.container-home {
   position: absolute;
   top: 0;
   left: 0;

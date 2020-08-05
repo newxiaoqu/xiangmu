@@ -4,10 +4,8 @@
     <el-card class="box-card">
       <div slot="header" class="clearfix">
         <!-- 头部区域 面包屑 -->
-        <el-breadcrumb separator-class="el-icon-arrow-right">
-          <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>内容管理</el-breadcrumb-item>
-        </el-breadcrumb>
+        <!-- 使用面包屑组件 -->
+        <my-bread>内容管理</my-bread>
       </div>
       <!-- 表单区域 -->
       <el-form label-width="80px" size="small">

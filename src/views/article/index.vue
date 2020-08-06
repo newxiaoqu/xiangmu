@@ -2,7 +2,7 @@
   <div class="container-article">
     <!-- 筛选条件区域 -->
     <el-card class="box-card">
-      <div slot="header" class="clearfix">
+      <div slot="header">
         <!-- 头部区域 面包屑 -->
         <!-- 使用面包屑组件 -->
         <my-bread>内容管理</my-bread>
@@ -23,9 +23,9 @@
           <el-select v-model="FilterData.channel_id" placeholder="请选择">
             <el-option
               v-for="item in ChannelData"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
             ></el-option>
           </el-select>
         </el-form-item>
@@ -46,7 +46,7 @@
     <!-- 筛选结果区域 -->
     <el-card>
       <div slot="header">
-        根据筛选条件共查询到55074条结果：
+        根据筛选条件共查询到 0 条结果：
         <!-- 使用表格 -->
         <el-table :data="articles">
           <el-table-column label="封面"></el-table-column>
@@ -80,16 +80,17 @@ export default {
       // 日期选择后的数据[起始日期，结束日期]
       value1: [],
       // 频道的数据
-      ChannelData: [
-        {
-          value: '选项1',
-          label: '黄金糕'
-        },
-        {
-          value: '选项2',
-          label: '双皮奶'
-        }
-      ]
+      ChannelData: []
+    }
+  },
+  created () {
+    this.getChannelOptions()
+  },
+  methods: {
+    // 获取频道的选项数据
+    async getChannelOptions () {
+      const { data: { data } } = await this.$http.get('channels')
+      this.ChannelData = data.channels
     }
   }
 }
@@ -100,5 +101,8 @@ export default {
   width: 98%;
   margin-top: 20px;
   margin-left: 10px;
+}
+.box-card{
+  margin-bottom: 20px;
 }
 </style>

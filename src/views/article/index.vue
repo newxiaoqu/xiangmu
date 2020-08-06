@@ -49,14 +49,40 @@
         根据筛选条件共查询到 0 条结果：
         <!-- 使用表格 -->
         <el-table :data="articles">
-          <el-table-column label="封面"></el-table-column>
-          <el-table-column label="标题"></el-table-column>
-          <el-table-column label="状态"></el-table-column>
-          <el-table-column label="发布时间"></el-table-column>
-          <el-table-column label="操作"></el-table-column>
+          <el-table-column label="封面">
+            <template slot-scope="scope">
+              <el-image :src="scope.row.cover.images[0]" style="width:150px;height:100px">
+                <div slot="error" class="image-slot">
+                  <img src="../../assets/load.jpg" style="width:150px;height:100px" />
+                </div>
+              </el-image>
+            </template>
+          </el-table-column>
+          <el-table-column prop="title" label="标题"></el-table-column>
+          <el-table-column label="状态">
+            <template slot-scope="scope">
+              <el-tag v-if="scope.row.status===0" type="info">草稿</el-tag>
+              <el-tag v-if="scope.row.status===1">待审核</el-tag>
+              <el-tag v-if="scope.row.status===2" type="success">审核通过</el-tag>
+              <el-tag v-if="scope.row.status===3" type="warning">审核失败</el-tag>
+              <el-tag v-if="scope.row.status===4" type="danger">已删除</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column prop="pubdate" label="发布时间"></el-table-column>
+          <el-table-column label="操作" width="120px">
+            <template>
+              <el-button plain type="primary" icon="el-icon-edit" circle></el-button>
+              <el-button plain type="danger" icon="el-icon-delete" circle></el-button>
+            </template>
+          </el-table-column>
         </el-table>
         <!-- 分页 -->
-        <el-pagination style="margin-top:20px;text-align:center" background layout="prev, pager, next" :total="1000"></el-pagination>
+        <el-pagination
+          style="margin-top:20px;text-align:center"
+          background
+          layout="prev, pager, next"
+          :total="1000"
+        ></el-pagination>
       </div>
     </el-card>
   </div>
@@ -73,7 +99,11 @@ export default {
         // 起始时间
         begin_pubdate: null,
         // 结束时间
-        end_pubdate: null
+        end_pubdate: null,
+        // 页数
+        page: 1,
+        // 每页数量
+        per_page: 20
       },
       // 文章列表
       articles: [],
@@ -85,12 +115,24 @@ export default {
   },
   created () {
     this.getChannelOptions()
+    this.getArticles()
   },
   methods: {
     // 获取频道的选项数据
     async getChannelOptions () {
-      const { data: { data } } = await this.$http.get('channels')
+      // 原始数据 res = {data: {message:'',data: {channels:[]}}}
+      // 按照 结构 去解构赋值
+      const {
+        data: { data }
+      } = await this.$http.get('channels')
       this.ChannelData = data.channels
+    },
+    // 获取文章的数据
+    async getArticles () {
+      const {
+        data: { data }
+      } = await this.$http.get('articles', { params: this.FilterData })
+      this.articles = data.results
     }
   }
 }
@@ -102,7 +144,7 @@ export default {
   margin-top: 20px;
   margin-left: 10px;
 }
-.box-card{
+.box-card {
   margin-bottom: 20px;
 }
 </style>

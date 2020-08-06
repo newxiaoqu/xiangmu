@@ -44,9 +44,19 @@
       </el-form>
     </el-card>
     <!-- 筛选结果区域 -->
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span>根据筛选条件共查询到55074条结果：</span>
+    <el-card>
+      <div slot="header">
+        根据筛选条件共查询到55074条结果：
+        <!-- 使用表格 -->
+        <el-table :data="articles">
+          <el-table-column label="封面"></el-table-column>
+          <el-table-column label="标题"></el-table-column>
+          <el-table-column label="状态"></el-table-column>
+          <el-table-column label="发布时间"></el-table-column>
+          <el-table-column label="操作"></el-table-column>
+        </el-table>
+        <!-- 分页 -->
+        <el-pagination style="margin-top:20px;text-align:center" background layout="prev, pager, next" :total="1000"></el-pagination>
       </div>
     </el-card>
   </div>
@@ -65,6 +75,8 @@ export default {
         // 结束时间
         end_pubdate: null
       },
+      // 文章列表
+      articles: [],
       // 日期选择后的数据[起始日期，结束日期]
       value1: [],
       // 频道的数据

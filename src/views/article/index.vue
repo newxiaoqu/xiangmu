@@ -20,7 +20,12 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="频道：">
-          <el-select v-model="FilterData.channel_id" placeholder="请选择">
+          <el-select
+            clearable
+            @change="changeChannel"
+            v-model="FilterData.channel_id"
+            placeholder="请选择"
+          >
             <el-option
               v-for="item in ChannelData"
               :key="item.id"
@@ -36,17 +41,19 @@
             range-separator="至"
             start-placeholder="开始日期"
             end-placeholder="结束日期"
+            @change="changeDate"
+            value-format="yyyy-MM-dd"
           ></el-date-picker>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">筛选</el-button>
+          <el-button type="primary" @click="search">筛选</el-button>
         </el-form-item>
       </el-form>
     </el-card>
     <!-- 筛选结果区域 -->
     <el-card>
       <div slot="header">
-        根据筛选条件共查询到 {{this.total}} 条结果：
+        根据筛选条件共查询到 {{ total }} 条结果：
         <!-- 使用表格 -->
         <el-table :data="articles">
           <el-table-column label="封面">
@@ -145,6 +152,27 @@ export default {
     changePager (newPage) {
       this.FilterData.page = newPage
       this.getArticles()
+    },
+    // 筛选
+    search () {
+      // 每次进行搜索的时候，页码都应该改为1
+      this.FilterData.page = 1
+      this.getArticles()
+    },
+    // 日期选择处理函数
+    changeDate (value) {
+      // value的值和value1: []的值一致
+      if (value) {
+        this.FilterData.begin_pubdate = value[0]
+        this.FilterData.end_pubdate = value[1]
+      } else {
+        this.FilterData.begin_pubdate = null
+        this.FilterData.end_pubdate = null
+      }
+    },
+    // 频道选择处理函数
+    changeChannel () {
+      if (this.FilterData.channel_id === '') { this.FilterData.channel_id = null }
     }
   }
 }

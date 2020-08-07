@@ -77,11 +77,11 @@
           </el-table-column>
           <el-table-column prop="pubdate" label="发布时间"></el-table-column>
           <el-table-column label="操作" width="120px">
-            <template>
+            <template slot-scope="scope">
               <!-- 修改 -->
               <el-button plain type="primary" icon="el-icon-edit" circle></el-button>
               <!-- 删除 -->
-              <el-button plain type="danger" icon="el-icon-delete" circle></el-button>
+              <el-button plain type="danger" icon="el-icon-delete" @click="delArticle(scope.row.id)" circle></el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -149,7 +149,6 @@ export default {
       this.articles = data.results
       // 总条数
       this.total = data.total_count
-      console.log(this.articles[0].id.toString())
     },
     // 改变分页
     changePager (newPage) {
@@ -176,6 +175,17 @@ export default {
     // 频道选择处理函数
     changeChannel () {
       if (this.FilterData.channel_id === '') { this.FilterData.channel_id = null }
+    },
+    // 删除文章
+    async delArticle (articleId) {
+      try {
+        await this.$http.delete(`articles/${articleId}`)
+        this.$message.success('删除成功')
+        this.getArticles()
+      } catch (error) {
+        console.log(error)
+        this.$message.error('删除失败')
+      }
     }
   }
 }

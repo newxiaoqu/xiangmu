@@ -79,7 +79,7 @@
           <el-table-column label="操作" width="120px">
             <template slot-scope="scope">
               <!-- 修改 -->
-              <el-button plain type="primary" icon="el-icon-edit" circle></el-button>
+              <el-button plain type="primary" icon="el-icon-edit" @click="toEdit(scope.row.id)" circle></el-button>
               <!-- 删除 -->
               <el-button plain type="danger" icon="el-icon-delete" @click="delArticle(scope.row.id)" circle></el-button>
             </template>
@@ -183,9 +183,12 @@ export default {
         this.$message.success('删除成功')
         this.getArticles()
       } catch (error) {
-        console.log(error)
         this.$message.error('删除失败')
       }
+    },
+    // 编辑文章
+    toEdit (articleId) {
+      this.$router.push(`/publish?id=${articleId}`)
     }
   }
 }

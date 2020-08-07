@@ -46,7 +46,7 @@
     <!-- 筛选结果区域 -->
     <el-card>
       <div slot="header">
-        根据筛选条件共查询到 0 条结果：
+        根据筛选条件共查询到 {{this.total}} 条结果：
         <!-- 使用表格 -->
         <el-table :data="articles">
           <el-table-column label="封面">
@@ -81,7 +81,10 @@
           style="margin-top:20px;text-align:center"
           background
           layout="prev, pager, next"
-          :total="1000"
+          :total="total"
+          :page-size="FilterData.per_page"
+          :current-page="FilterData.page"
+          @current-change="changePager"
         ></el-pagination>
       </div>
     </el-card>
@@ -110,7 +113,9 @@ export default {
       // 日期选择后的数据[起始日期，结束日期]
       value1: [],
       // 频道的数据
-      ChannelData: []
+      ChannelData: [],
+      // 总条数
+      total: 0
     }
   },
   created () {
@@ -133,6 +138,13 @@ export default {
         data: { data }
       } = await this.$http.get('articles', { params: this.FilterData })
       this.articles = data.results
+      // 总条数
+      this.total = data.total_count
+    },
+    // 改变分页
+    changePager (newPage) {
+      this.FilterData.page = newPage
+      this.getArticles()
     }
   }
 }

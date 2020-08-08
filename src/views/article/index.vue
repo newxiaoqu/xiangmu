@@ -20,7 +20,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="频道：">
-          <my-channel></my-channel>
+          <my-channel v-model="FilterData.channel_id"></my-channel>
         </el-form-item>
         <el-form-item label="日期：">
           <el-date-picker
@@ -94,7 +94,9 @@ export default {
     return {
       // 筛选条件对象
       FilterData: {
+        // 如果不传值为null，默认查询全部状态
         status: null,
+        channel_id: null,
         // 起始时间
         begin_pubdate: null,
         // 结束时间

@@ -20,19 +20,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="频道：">
-          <el-select
-            clearable
-            @change="changeChannel"
-            v-model="FilterData.channel_id"
-            placeholder="请选择"
-          >
-            <el-option
-              v-for="item in ChannelData"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
-            ></el-option>
-          </el-select>
+          <my-channel></my-channel>
         </el-form-item>
         <el-form-item label="日期：">
           <el-date-picker
@@ -107,7 +95,6 @@ export default {
       // 筛选条件对象
       FilterData: {
         status: null,
-        channel_id: null,
         // 起始时间
         begin_pubdate: null,
         // 结束时间
@@ -121,26 +108,16 @@ export default {
       articles: [],
       // 日期选择后的数据[起始日期，结束日期]
       value1: [],
-      // 频道的数据
-      ChannelData: [],
+
       // 总条数
       total: 0
     }
   },
   created () {
-    this.getChannelOptions()
     this.getArticles()
   },
   methods: {
-    // 获取频道的选项数据
-    async getChannelOptions () {
-      // 原始数据 res = {data: {message:'',data: {channels:[]}}}
-      // 按照 结构 去解构赋值
-      const {
-        data: { data }
-      } = await this.$http.get('channels')
-      this.ChannelData = data.channels
-    },
+
     // 获取文章的数据
     async getArticles () {
       const {
@@ -172,10 +149,7 @@ export default {
         this.FilterData.end_pubdate = null
       }
     },
-    // 频道选择处理函数
-    changeChannel () {
-      if (this.FilterData.channel_id === '') { this.FilterData.channel_id = null }
-    },
+
     // 删除文章
     async delArticle (articleId) {
       try {

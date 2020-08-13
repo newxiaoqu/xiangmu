@@ -22,7 +22,7 @@
             <!-- 收藏素材 -->
             <span @click="toogleStatus(item)" class="el-icon-star-off" :class="{red:item.is_collected}"></span>
             <!-- 删除素材 -->
-            <span class="el-icon-delete"></span>
+            <span @click="deImages(item.id)" class="el-icon-delete"></span>
           </div>
         </div>
       </div>
@@ -95,6 +95,16 @@ export default {
         item.is_collected = data.collect
       } catch (error) {
         this.$message.error('操作失败')
+      }
+    },
+    // 删除素材
+    async deImages (id) {
+      try {
+        await this.$http.delete(`/user/images/${id}`)
+        this.$message.success('删除素材成功')
+        this.getImages()
+      } catch (error) {
+        this.$message.error('删除素材失败')
       }
     }
   }

@@ -11,8 +11,15 @@
           <el-radio-button :label="false">全部</el-radio-button>
           <el-radio-button :label="true">收藏</el-radio-button>
         </el-radio-group>
-        <el-button style="float:right" type="success" size="small">添加素材</el-button>
+        <el-button @click="addDialog()" style="float:right" type="success" size="small">添加素材</el-button>
       </div>
+      <!-- 对话框组件 -->
+      <el-dialog title="上传素材" :visible.sync="dialogVisible" width="300px">
+        <span>上传组件</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">关 闭</el-button>
+        </span>
+      </el-dialog>
       <!-- 图片列表 -->
       <div class="img_list">
         <div class="img_item" v-for="item in images" :key="item.id">
@@ -20,7 +27,11 @@
           <!-- 图片底部操作栏 -->
           <div class="option" v-if="!filterParams.collect">
             <!-- 收藏素材 -->
-            <span @click="toogleStatus(item)" class="el-icon-star-off" :class="{red:item.is_collected}"></span>
+            <span
+              @click="toogleStatus(item)"
+              class="el-icon-star-off"
+              :class="{red:item.is_collected}"
+            ></span>
             <!-- 删除素材 -->
             <span @click="deImages(item.id)" class="el-icon-delete"></span>
           </div>
@@ -56,7 +67,9 @@ export default {
       // 图片列表数据
       images: [],
       // 图片总数
-      total: 0
+      total: 0,
+      // 控制对话框显示隐藏
+      dialogVisible: false
     }
   },
   // 组件初始化的时候获取数据，给列表数据赋值
@@ -85,7 +98,9 @@ export default {
     // 切换收藏状态
     async toogleStatus (item) {
       try {
-        const { data: { data } } = await this.$http.put(`user/images/${item.id}`, {
+        const {
+          data: { data }
+        } = await this.$http.put(`user/images/${item.id}`, {
           collect: !item.is_collected
         })
         // 提示
@@ -106,6 +121,10 @@ export default {
       } catch (error) {
         this.$message.error('删除素材失败')
       }
+    },
+    // 打开对话框
+    addDialog () {
+      this.dialogVisible = true
     }
   }
 }

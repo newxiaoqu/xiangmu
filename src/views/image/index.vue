@@ -19,7 +19,9 @@
           <img :src="item.url" alt />
           <!-- 图片底部操作栏 -->
           <div class="option" v-if="!filterParams.collect">
-            <span class="el-icon-star-off" :class="{red:item.is_collected}"></span>
+            <!-- 收藏素材 -->
+            <span @click="toogleStatus(item)" class="el-icon-star-off" :class="{red:item.is_collected}"></span>
+            <!-- 删除素材 -->
             <span class="el-icon-delete"></span>
           </div>
         </div>
@@ -79,6 +81,21 @@ export default {
     changeCollect () {
       this.filterParams.page = 1
       this.getImages()
+    },
+    // 切换收藏状态
+    async toogleStatus (item) {
+      try {
+        const { data: { data } } = await this.$http.put(`user/images/${item.id}`, {
+          collect: !item.is_collected
+        })
+        // 提示
+        this.$message.success(data.collect ? '添加收藏成功' : '取消收藏成功')
+        // 修改星星样式
+        // 修改当前图片的数据，is_collected 值改成后台返回的值即可
+        item.is_collected = data.collect
+      } catch (error) {
+        this.$message.error('操作失败')
+      }
     }
   }
 }

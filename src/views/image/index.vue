@@ -29,6 +29,9 @@
         background
         layout="prev, pager, next"
         :total="total"
+        :current-page="filterParams.page"
+        :page-size="filterParams.per_page"
+        @current-change="changePager"
       ></el-pagination>
     </el-card>
   </div>
@@ -58,12 +61,18 @@ export default {
     this.getImages()
   },
   methods: {
+    // 获取图片数据
     async getImages () {
       const {
         data: { data }
       } = await this.$http.get('user/images', { params: this.filterParams })
       this.images = data.results
       this.total = data.total_count
+    },
+    // 处理页码改变
+    changePager (newPage) {
+      this.filterParams.page = newPage
+      this.getImages()
     }
   }
 }

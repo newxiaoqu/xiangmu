@@ -38,8 +38,8 @@ export default {
     }
     return {
       form: {
-        mobile: '',
-        code: '',
+        mobile: '13911111111',
+        code: '246810',
         checked: true
       },
       RulesLogin: {

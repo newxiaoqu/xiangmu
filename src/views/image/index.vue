@@ -15,16 +15,21 @@
       </div>
       <!-- 图片列表 -->
       <div class="img_list">
-        <div class="img_item" v-for="index in 10" :key="index">
-          <img src="../../assets/aixinxin.jpg" alt />
+        <div class="img_item" v-for="item in images" :key="item.id">
+          <img :src="item.url" alt />
           <div class="option">
-            <span class="el-icon-star-off"></span>
+            <span class="el-icon-star-off" :class="{red:item.is_collected}"></span>
             <span class="el-icon-delete"></span>
           </div>
         </div>
       </div>
       <!-- 分页区域 -->
-      <el-pagination style="margin-top:20px;text-align:center" background layout="prev, pager, next" :total="1000"></el-pagination>
+      <el-pagination
+        style="margin-top:20px;text-align:center"
+        background
+        layout="prev, pager, next"
+        :total="total"
+      ></el-pagination>
     </el-card>
   </div>
 </template>
@@ -36,8 +41,29 @@ export default {
       // 筛选参数
       filterParams: {
         // false全部 true 收藏
-        collect: false
-      }
+        collect: false,
+        // 页数
+        page: 1,
+        // 每页数量
+        per_page: 10
+      },
+      // 图片列表数据
+      images: [],
+      // 图片总数
+      total: 0
+    }
+  },
+  // 组件初始化的时候获取数据，给列表数据赋值
+  created () {
+    this.getImages()
+  },
+  methods: {
+    async getImages () {
+      const {
+        data: { data }
+      } = await this.$http.get('user/images', { params: this.filterParams })
+      this.images = data.results
+      this.total = data.total_count
     }
   }
 }

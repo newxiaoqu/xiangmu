@@ -7,7 +7,7 @@
       </div>
       <!-- 按钮区域 -->
       <div class="btn_box">
-        <el-radio-group v-model="filterParams.collect" size="small">
+        <el-radio-group @change="changeCollect" v-model="filterParams.collect" size="small">
           <el-radio-button :label="false">全部</el-radio-button>
           <el-radio-button :label="true">收藏</el-radio-button>
         </el-radio-group>
@@ -17,7 +17,8 @@
       <div class="img_list">
         <div class="img_item" v-for="item in images" :key="item.id">
           <img :src="item.url" alt />
-          <div class="option">
+          <!-- 图片底部操作栏 -->
+          <div class="option" v-if="!filterParams.collect">
             <span class="el-icon-star-off" :class="{red:item.is_collected}"></span>
             <span class="el-icon-delete"></span>
           </div>
@@ -72,6 +73,11 @@ export default {
     // 处理页码改变
     changePager (newPage) {
       this.filterParams.page = newPage
+      this.getImages()
+    },
+    // 点击切换 全部与收藏按钮来获取数据
+    changeCollect () {
+      this.filterParams.page = 1
       this.getImages()
     }
   }

@@ -15,7 +15,15 @@
       </div>
       <!-- 对话框组件 -->
       <el-dialog title="上传素材" :visible.sync="dialogVisible" width="300px">
-        <span>上传组件</span>
+        <el-upload
+          class="avatar-uploader"
+          action="https://jsonplaceholder.typicode.com/posts/"
+          :show-file-list="false"
+          :on-success="uploadSuccess"
+        >
+          <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogVisible = false">关 闭</el-button>
         </span>
@@ -69,7 +77,9 @@ export default {
       // 图片总数
       total: 0,
       // 控制对话框显示隐藏
-      dialogVisible: false
+      dialogVisible: false,
+      // 预览图
+      imageUrl: null
     }
   },
   // 组件初始化的时候获取数据，给列表数据赋值
@@ -125,6 +135,10 @@ export default {
     // 打开对话框
     addDialog () {
       this.dialogVisible = true
+    },
+    // 上传成功的回调函数
+    uploadSuccess () {
+
     }
   }
 }

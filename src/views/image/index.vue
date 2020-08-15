@@ -15,11 +15,14 @@
       </div>
       <!-- 对话框组件 -->
       <el-dialog title="上传素材" :visible.sync="dialogVisible" width="300px">
+        <!-- 上传组件 -->
         <el-upload
           class="avatar-uploader"
-          action="https://jsonplaceholder.typicode.com/posts/"
+          action="http://ttapi.research.itcast.cn/mp/v1_0/user/images"
+          :headers="headers"
           :show-file-list="false"
           :on-success="uploadSuccess"
+          name="image"
         >
           <img v-if="imageUrl" :src="imageUrl" class="avatar" />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -60,6 +63,7 @@
 </template>
 
 <script>
+import store from '@/store'
 export default {
   data () {
     return {
@@ -79,7 +83,11 @@ export default {
       // 控制对话框显示隐藏
       dialogVisible: false,
       // 预览图
-      imageUrl: null
+      imageUrl: null,
+      // 上传素材时请求头携带的token
+      headers: {
+        Authorization: `Bearer ${store.getUser().token}`
+      }
     }
   },
   // 组件初始化的时候获取数据，给列表数据赋值
@@ -137,8 +145,18 @@ export default {
       this.dialogVisible = true
     },
     // 上传成功的回调函数
-    uploadSuccess () {
-
+    uploadSuccess (res) {
+      // 预览图片
+      this.imageUrl = res.data.url
+      // 上传成功后的提示
+      this.$message.success('上传素材成功')
+      // 2s后关闭对话框，更新列表
+      window.setTimeout(() => {
+        // 关闭对话框
+        this.dialogVisible = false
+        // 更新列表
+        this.getImages()
+      }, 2000)
     }
   }
 }
